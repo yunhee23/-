@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>경복궁 문화유산 탐방 앱 - STEP 01</title>
+
+  <!-- jQuery Mobile 1.4.5 CSS -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+  <style>
+    :root {
+      --green-deep: #173f3b;
+      --green-mid: #2d5a4f;
+      --paper: #f7f5ef;
+      --line: #d8d6cc;
+      --ink: #25302d;
+      --muted: #6b726f;
+      --mint: #d5e8df;
+    }
+
+    /* 공통 */
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-content { background: var(--paper); color: var(--ink); }
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-btn,
+    .ui-page-theme-a .ui-body-a,
+    .ui-page-theme-a input,
+    .ui-page-theme-a button {
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      text-shadow: none;
+    }
+
+    /* 헤더 / 푸터 */
+    .ui-header.ui-bar-inherit {
+      background: var(--green-deep);
+      border: 0;
+      color: #fff;
+    }
+    .ui-header .ui-title {
+      margin: 0;
+      padding: 1.1em 1em;
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: none;
+    }
+    .ui-header .ui-btn {
+      background: transparent;
+      border: 0;
+      color: #fff;
+      text-shadow: none;
+    }
+    .ui-footer.ui-bar-inherit {
+      background: #e6e9df;
+      border: 0;
+      color: var(--green-mid);
+      text-align: center;
+      padding: 1.1em 1em;
+      font-size: .8em;
+      font-weight: 700;
+    }
+    .ui-footer p { margin: 0; }
+
+    /* 홈: 히어로 */
+    .hero {
+      position: relative;
+      height: 210px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #9cc7de 0%, #5f8576 100%);
+    }
+    .hero img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .hero-caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 2.2em 1.1em .9em;
+      color: #fff;
+      background: linear-gradient(to top, rgba(10, 30, 28, .8), rgba(10, 30, 28, 0));
+    }
+    .hero-caption h2 { margin: 0 0 .3em; font-size: 1.15em; font-weight: 700; }
+    .hero-caption p { margin: 0; font-size: .82em; opacity: .95; }
+
+    .lead { margin: 1.4em 0 1.1em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    /* 홈: 메뉴 리스트뷰 */
+    .menu-list { margin: 0 0 1em; }
+    .menu-list > li > a.ui-btn {
+      padding: 1.1em 1em;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--green-deep);
+      font-size: 1.05em;
+      font-weight: 700;
+    }
+    .menu-list > li { border: 0; }
+
+    .step-card {
+      margin-top: .8em;
+      padding: 1.1em 1em 1.3em;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .step-badge {
+      display: inline-block;
+      padding: .25em .9em;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--green-deep);
+      font-size: .78em;
+      font-weight: 700;
+    }
+    .step-card p { margin: 1.6em 0 0; font-size: .86em; color: var(--muted); }
+
+    /* 소개: 접이식 */
+    .intro-title { margin: .2em 0 .4em; font-size: 1.25em; color: var(--green-deep); }
+    .intro-sub { margin: 0 0 1.2em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .ui-collapsible-set { margin: 0; }
+    .ui-collapsible-set .ui-collapsible { margin: 0 0 .7em; }
+    .ui-collapsible-set .ui-collapsible-heading-toggle {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--green-deep);
+      font-weight: 700;
+      padding: 1em 1em 1em 2.6em;
+    }
+    .ui-collapsible-set .ui-collapsible:not(.ui-collapsible-collapsed) > .ui-collapsible-heading > .ui-collapsible-heading-toggle {
+      background: var(--mint);
+      border-radius: 10px 10px 0 0;
+    }
+    .ui-collapsible-set .ui-collapsible-content {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 10px 10px;
+      padding: .9em 1.1em 1.1em;
+      font-size: .9em;
+      line-height: 1.75;
+    }
+    .ui-collapsible-content p { margin: 0 0 .7em; }
+    .ui-collapsible-content p:last-child { margin-bottom: 0; }
+    .ui-collapsible-content ul { margin: 0; padding-left: 1.2em; }
+    .ui-collapsible-content li { margin-bottom: .45em; }
+    .ui-collapsible-content li:last-child { margin-bottom: 0; }
+    .ui-collapsible-content strong { color: var(--green-deep); }
+  </style>
+
+  <!-- jQuery 1.11.1 → jQuery Mobile 1.4.5 순서로 로드 -->
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== 홈 ========== -->
+  <div data-role="page" id="home">
+    <div data-role="header" data-theme="a">
+      <h1>경복궁 문화유산 탐방 앱</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <div class="hero">
+        <img src="../assets/scene-01.jpg" alt="경복궁 근정전 전경 예시 이미지">
+        <div class="hero-caption">
+          <h2>서울의 궁궐, 모바일로 탐방하기</h2>
+          <p>이미지·영상·오디오를 다루는 jQuery Mobile 실습</p>
+        </div>
+      </div>
+
+      <p class="lead">목록에서 탐방할 콘텐츠를 선택하세요. 모든 시각 자료는 교육용으로 제작된 예시 이미지입니다.</p>
+
+      <ul data-role="listview" class="menu-list">
+        <li><a href="#intro" data-transition="slide">궁궐 소개</a></li>
+      </ul>
+
+      <div class="step-card">
+        <span class="step-badge">STEP 01</span>
+        <p>궁궐 소개에 대한 자세한 설명입니다.</p>
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 궁궐 소개 ========== -->
+  <div data-role="page" id="intro">
+    <div data-role="header" data-theme="a">
+      <a href="#home" data-rel="back" data-direction="reverse" data-icon="carat-l" data-iconpos="notext" class="ui-btn-left">홈으로</a>
+      <h1>궁궐 소개</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h2 class="intro-title">경복궁</h2>
+      <p class="intro-sub">조선의 법궁(法宮)으로 세워진 서울의 대표 궁궐입니다. 항목을 눌러 자세한 내용을 확인하세요.</p>
+
+      <div data-role="collapsible-set" data-inset="true">
+
+        <div data-role="collapsible" data-collapsed="false">
+          <h3>역사</h3>
+          <ul>
+            <li><strong>1395년</strong> 태조 이성계가 한양 천도 후 가장 먼저 지은 궁궐입니다.</li>
+            <li><strong>임진왜란</strong> 때 대부분의 건물이 불에 타 약 270년간 빈터로 남았습니다.</li>
+            <li><strong>1867년</strong> 고종 때 흥선대원군의 주도로 다시 지어졌습니다.</li>
+            <li>일제강점기에 많은 건물이 훼손되었고, 현재 복원 사업이 이어지고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>건축물</h3>
+          <ul>
+            <li><strong>광화문</strong> 경복궁의 정문으로, 궁궐 남쪽에서 가장 먼저 만나는 문입니다.</li>
+            <li><strong>근정전</strong> 왕의 즉위식과 큰 행사가 열리던 정전으로, 국보로 지정되어 있습니다.</li>
+            <li><strong>경회루</strong> 연못 위에 세운 누각으로, 나라의 연회를 열던 곳입니다.</li>
+            <li><strong>향원정</strong> 연못 가운데 섬에 세운 정자로, 후원의 정취를 보여 줍니다.</li>
+          </ul>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>관람 예절</h3>
+          <ul>
+            <li>건물 기둥, 담장, 석조물은 손으로 만지거나 기대지 않습니다.</li>
+            <li>지정된 관람 동선을 따르고, 출입 제한 구역에는 들어가지 않습니다.</li>
+            <li>다른 관람객을 위해 조용히 이야기하고 쓰레기는 되가져갑니다.</li>
+            <li>휴궁일과 관람 시간은 방문 전에 공식 안내에서 확인하세요.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+</body>
+</html>

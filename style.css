@@ -1,0 +1,184 @@
+    :root {
+      --green-deep: #173f3b;
+      --green-mid: #2d5a4f;
+      --green-btn: #2a7062;
+      --paper: #f7f5ef;
+      --line: #d8d6cc;
+      --ink: #25302d;
+      --muted: #6b726f;
+      --mint: #d5e8df;
+    }
+
+    /* ---------- 공통 (STEP 01 유지) ---------- */
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-content { background: var(--paper); color: var(--ink); }
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-btn,
+    .ui-page-theme-a .ui-body-a,
+    .ui-page-theme-a input,
+    .ui-page-theme-a button {
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      text-shadow: none;
+    }
+
+    .ui-header.ui-bar-inherit { background: var(--green-deep); border: 0; color: #fff; }
+    .ui-header .ui-title {
+      margin: 0; padding: 1.1em 1em;
+      font-size: 1.15em; font-weight: 700; color: #fff; text-shadow: none;
+    }
+    .ui-header .ui-btn { background: transparent; border: 0; color: #fff; text-shadow: none; }
+    .ui-footer.ui-bar-inherit {
+      background: #e6e9df; border: 0; color: var(--green-mid);
+      text-align: center; padding: 1.1em 1em; font-size: .8em; font-weight: 700;
+    }
+    .ui-footer p { margin: 0; }
+
+    /* 홈 */
+    .hero {
+      position: relative; height: 210px; border-radius: 14px; overflow: hidden;
+      background: linear-gradient(180deg, #9cc7de 0%, #5f8576 100%);
+    }
+    .hero img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .hero-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 2.2em 1.1em .9em; color: #fff;
+      background: linear-gradient(to top, rgba(10, 30, 28, .8), rgba(10, 30, 28, 0));
+    }
+    .hero-caption h2 { margin: 0 0 .3em; font-size: 1.15em; font-weight: 700; }
+    .hero-caption p { margin: 0; font-size: .82em; opacity: .95; }
+    .lead { margin: 1.4em 0 1.1em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .menu-list { margin: 0 0 1em; }
+    .menu-list > li { border: 0; margin-bottom: .6em; }
+    .menu-list > li > a.ui-btn {
+      padding: 1.1em 1em; background: #fff; border: 1px solid var(--line);
+      border-radius: 10px; color: var(--green-deep); font-size: 1.05em; font-weight: 700;
+    }
+
+    .step-card {
+      margin-top: .8em; padding: 1.1em 1em 1.3em;
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    }
+    .step-badge {
+      display: inline-block; padding: .25em .9em; border-radius: 999px;
+      background: var(--mint); color: var(--green-deep); font-size: .78em; font-weight: 700;
+    }
+    .step-card p { margin: 1.6em 0 0; font-size: .86em; color: var(--muted); }
+
+    /* 소개 */
+    .intro-title { margin: .2em 0 .4em; font-size: 1.25em; color: var(--green-deep); }
+    .intro-sub { margin: 0 0 1.2em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .ui-collapsible-set { margin: 0; }
+    .ui-collapsible-set .ui-collapsible { margin: 0 0 .7em; }
+    .ui-collapsible-set .ui-collapsible-heading-toggle {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      color: var(--green-deep); font-weight: 700; padding: 1em 1em 1em 2.6em;
+    }
+    .ui-collapsible-set .ui-collapsible:not(.ui-collapsible-collapsed) > .ui-collapsible-heading > .ui-collapsible-heading-toggle {
+      background: var(--mint); border-radius: 10px 10px 0 0;
+    }
+    .ui-collapsible-set .ui-collapsible-content {
+      background: #fff; border: 1px solid var(--line); border-top: 0;
+      border-radius: 0 0 10px 10px; padding: .9em 1.1em 1.1em;
+      font-size: .9em; line-height: 1.75;
+    }
+    .ui-collapsible-content p { margin: 0 0 .7em; }
+    .ui-collapsible-content p:last-child { margin-bottom: 0; }
+    .ui-collapsible-content ul { margin: 0; padding-left: 1.2em; }
+    .ui-collapsible-content li { margin-bottom: .45em; }
+    .ui-collapsible-content li:last-child { margin-bottom: 0; }
+    .ui-collapsible-content strong { color: var(--green-deep); }
+
+    /* ---------- STEP 02 추가: 영상 / 음악 / 안내 ---------- */
+    .page-title { margin: .2em 0 .7em; text-align: center; font-size: 1.5em; color: var(--green-mid); }
+    .note-box {
+      margin: 0 0 1.1em; padding: .8em 1em;
+      border-left: 3px solid var(--green-btn); background: #e6efe9;
+      color: var(--green-deep); font-weight: 700; font-size: .95em;
+    }
+    .section-label { margin: 1.3em 0 .5em; font-size: .95em; font-weight: 700; color: var(--green-deep); }
+
+    .video-wrap {
+      position: relative; padding-top: 56.25%;
+      border-radius: 10px; overflow: hidden; background: #000;
+    }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    video.local-video { display: block; width: 100%; border-radius: 10px; background: #000; }
+
+    audio { display: block; width: 100%; margin: 0 0 1em; }
+    .cover { display: block; width: 100%; border-radius: 10px; }
+    .caption { margin: .8em 0 1em; font-size: .8em; line-height: 1.6; color: var(--muted); }
+
+    .help-link { display: inline-block; margin: .2em 0 .8em; font-size: .82em; color: var(--green-btn); }
+
+    .nav-row { display: flex; gap: .6em; margin-top: 1em; }
+    .nav-row .ui-btn {
+      flex: 1; margin: 0; padding: .9em .5em;
+      background: var(--green-btn); border: 0; border-radius: 8px;
+      color: #fff; font-size: 1em; font-weight: 700; text-shadow: none;
+    }
+
+    /* 안내 다이얼로그 */
+    #media-help .ui-content { background: var(--paper); }
+    #media-help ul { margin: 0 0 1.2em; padding-left: 1.2em; font-size: .92em; line-height: 1.75; }
+    #media-help li { margin-bottom: .4em; }
+    #media-help .ui-btn {
+      background: var(--green-btn); border: 0; border-radius: 8px;
+      color: #fff; font-weight: 700; text-shadow: none;
+    }
+
+    /* ---------- STEP 03 추가: 갤러리 / 팝업 ---------- */
+    .home-btn.ui-btn {
+      background: var(--green-btn); border: 0; border-radius: 6px;
+      color: #fff; font-size: .8em; font-weight: 700; padding: .7em 1em; margin-top: .9em;
+    }
+    .gallery-lead { margin: .4em 0 1em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .6em;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .gallery-item,
+    .gallery-item:hover,
+    .gallery-item:focus {
+      display: block; overflow: hidden;
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      color: var(--green-deep); text-decoration: none; text-shadow: none;
+    }
+    .gallery-thumb {
+      overflow: hidden; aspect-ratio: 4 / 3;
+      background: linear-gradient(180deg, #9cc7de 0%, #5f8576 100%);
+    }
+    .gallery-thumb img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .gallery-caption {
+      display: block; padding: .8em .9em;
+      font-size: .8em; font-weight: 700; transition: background .2s ease;
+    }
+    @media (hover: hover) {
+      .gallery-item:hover .gallery-thumb img { transform: scale(1.07); filter: brightness(1.05); }
+      .gallery-item:hover .gallery-caption { background: var(--mint); }
+    }
+    .gallery-item:focus-visible { outline: 3px solid var(--green-btn); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-thumb img, .gallery-caption { transition: none; }
+      .gallery-item:hover .gallery-thumb img { transform: none; }
+    }
+
+    #photoPopup { background: #fff; border-radius: 12px; overflow: hidden; }
+    #photoPopup .popup-body { padding: 2.6em .8em .9em; text-align: center; }
+    #photoPopup .popup-img {
+      display: block; margin: 0 auto;
+      max-width: 100%; height: auto;
+      object-fit: contain; border-radius: 8px; background: #eef1ea;
+    }
+    #photoPopup .popup-caption {
+      margin: .8em 0 0; font-size: 1.05em; font-weight: 700; color: var(--green-deep);
+    }

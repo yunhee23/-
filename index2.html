@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>경복궁 문화유산 탐방 앱 - STEP 02</title>
+
+  <!-- jQuery Mobile 1.4.5 CSS -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+  <style>
+    :root {
+      --green-deep: #173f3b;
+      --green-mid: #2d5a4f;
+      --green-btn: #2a7062;
+      --paper: #f7f5ef;
+      --line: #d8d6cc;
+      --ink: #25302d;
+      --muted: #6b726f;
+      --mint: #d5e8df;
+    }
+
+    /* ---------- 공통 (STEP 01 유지) ---------- */
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-content { background: var(--paper); color: var(--ink); }
+    .ui-page-theme-a,
+    .ui-page-theme-a .ui-btn,
+    .ui-page-theme-a .ui-body-a,
+    .ui-page-theme-a input,
+    .ui-page-theme-a button {
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      text-shadow: none;
+    }
+
+    .ui-header.ui-bar-inherit { background: var(--green-deep); border: 0; color: #fff; }
+    .ui-header .ui-title {
+      margin: 0; padding: 1.1em 1em;
+      font-size: 1.15em; font-weight: 700; color: #fff; text-shadow: none;
+    }
+    .ui-header .ui-btn { background: transparent; border: 0; color: #fff; text-shadow: none; }
+    .ui-footer.ui-bar-inherit {
+      background: #e6e9df; border: 0; color: var(--green-mid);
+      text-align: center; padding: 1.1em 1em; font-size: .8em; font-weight: 700;
+    }
+    .ui-footer p { margin: 0; }
+
+    /* 홈 */
+    .hero {
+      position: relative; height: 210px; border-radius: 14px; overflow: hidden;
+      background: linear-gradient(180deg, #9cc7de 0%, #5f8576 100%);
+    }
+    .hero img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .hero-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 2.2em 1.1em .9em; color: #fff;
+      background: linear-gradient(to top, rgba(10, 30, 28, .8), rgba(10, 30, 28, 0));
+    }
+    .hero-caption h2 { margin: 0 0 .3em; font-size: 1.15em; font-weight: 700; }
+    .hero-caption p { margin: 0; font-size: .82em; opacity: .95; }
+    .lead { margin: 1.4em 0 1.1em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .menu-list { margin: 0 0 1em; }
+    .menu-list > li { border: 0; margin-bottom: .6em; }
+    .menu-list > li > a.ui-btn {
+      padding: 1.1em 1em; background: #fff; border: 1px solid var(--line);
+      border-radius: 10px; color: var(--green-deep); font-size: 1.05em; font-weight: 700;
+    }
+
+    .step-card {
+      margin-top: .8em; padding: 1.1em 1em 1.3em;
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    }
+    .step-badge {
+      display: inline-block; padding: .25em .9em; border-radius: 999px;
+      background: var(--mint); color: var(--green-deep); font-size: .78em; font-weight: 700;
+    }
+    .step-card p { margin: 1.6em 0 0; font-size: .86em; color: var(--muted); }
+
+    /* 소개 */
+    .intro-title { margin: .2em 0 .4em; font-size: 1.25em; color: var(--green-deep); }
+    .intro-sub { margin: 0 0 1.2em; font-size: .88em; line-height: 1.7; color: var(--muted); }
+
+    .ui-collapsible-set { margin: 0; }
+    .ui-collapsible-set .ui-collapsible { margin: 0 0 .7em; }
+    .ui-collapsible-set .ui-collapsible-heading-toggle {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      color: var(--green-deep); font-weight: 700; padding: 1em 1em 1em 2.6em;
+    }
+    .ui-collapsible-set .ui-collapsible:not(.ui-collapsible-collapsed) > .ui-collapsible-heading > .ui-collapsible-heading-toggle {
+      background: var(--mint); border-radius: 10px 10px 0 0;
+    }
+    .ui-collapsible-set .ui-collapsible-content {
+      background: #fff; border: 1px solid var(--line); border-top: 0;
+      border-radius: 0 0 10px 10px; padding: .9em 1.1em 1.1em;
+      font-size: .9em; line-height: 1.75;
+    }
+    .ui-collapsible-content p { margin: 0 0 .7em; }
+    .ui-collapsible-content p:last-child { margin-bottom: 0; }
+    .ui-collapsible-content ul { margin: 0; padding-left: 1.2em; }
+    .ui-collapsible-content li { margin-bottom: .45em; }
+    .ui-collapsible-content li:last-child { margin-bottom: 0; }
+    .ui-collapsible-content strong { color: var(--green-deep); }
+
+    /* ---------- STEP 02 추가: 영상 / 음악 / 안내 ---------- */
+    .page-title { margin: .2em 0 .7em; text-align: center; font-size: 1.5em; color: var(--green-mid); }
+    .note-box {
+      margin: 0 0 1.1em; padding: .8em 1em;
+      border-left: 3px solid var(--green-btn); background: #e6efe9;
+      color: var(--green-deep); font-weight: 700; font-size: .95em;
+    }
+    .section-label { margin: 1.3em 0 .5em; font-size: .95em; font-weight: 700; color: var(--green-deep); }
+
+    .video-wrap {
+      position: relative; padding-top: 56.25%;
+      border-radius: 10px; overflow: hidden; background: #000;
+    }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    video.local-video { display: block; width: 100%; border-radius: 10px; background: #000; }
+
+    audio { display: block; width: 100%; margin: 0 0 1em; }
+    .cover { display: block; width: 100%; border-radius: 10px; }
+    .caption { margin: .8em 0 1em; font-size: .8em; line-height: 1.6; color: var(--muted); }
+
+    .help-link { display: inline-block; margin: .2em 0 .8em; font-size: .82em; color: var(--green-btn); }
+
+    .nav-row { display: flex; gap: .6em; margin-top: 1em; }
+    .nav-row .ui-btn {
+      flex: 1; margin: 0; padding: .9em .5em;
+      background: var(--green-btn); border: 0; border-radius: 8px;
+      color: #fff; font-size: 1em; font-weight: 700; text-shadow: none;
+    }
+
+    /* 안내 다이얼로그 */
+    #media-help .ui-content { background: var(--paper); }
+    #media-help ul { margin: 0 0 1.2em; padding-left: 1.2em; font-size: .92em; line-height: 1.75; }
+    #media-help li { margin-bottom: .4em; }
+    #media-help .ui-btn {
+      background: var(--green-btn); border: 0; border-radius: 8px;
+      color: #fff; font-weight: 700; text-shadow: none;
+    }
+  </style>
+
+  <!-- jQuery 1.11.1 → jQuery Mobile 1.4.5 순서로 로드 -->
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <script>
+    (function ($) {
+      // 페이지 안의 audio, video, 유튜브 iframe을 모두 일시정지
+      function pauseMedia($scope) {
+        $scope.find("audio, video").each(function () {
+          try { this.pause(); } catch (e) {}
+        });
+        $scope.find("iframe[data-youtube]").each(function () {
+          if (this.contentWindow) {
+            this.contentWindow.postMessage(
+              JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "*"
+            );
+          }
+        });
+      }
+
+      // 페이지가 숨겨지기 직전, 떠나는 페이지의 미디어를 정지 (다이얼로그를 열 때도 동작)
+      $(document).on("pagecontainerbeforehide", function (event, ui) {
+        var $leaving = (ui && ui.prevPage && ui.prevPage.length)
+          ? ui.prevPage
+          : $(":mobile-pagecontainer").pagecontainer("getActivePage");
+        if ($leaving && $leaving.length) { pauseMedia($leaving); }
+      });
+
+      // 새 미디어를 재생하면 다른 audio/video는 멈춤 (play 이벤트는 버블링되지 않아 캡처링 사용)
+      document.addEventListener("play", function (event) {
+        $("audio, video").not(event.target).each(function () { this.pause(); });
+      }, true);
+    })(jQuery);
+  </script>
+</head>
+<body>
+
+  <!-- ========== 홈 ========== -->
+  <div data-role="page" id="home">
+    <div data-role="header" data-theme="a">
+      <h1>경복궁 문화유산 탐방 앱</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <div class="hero">
+        <img src="../assets/scene-01.jpg" alt="경복궁 근정전 전경 예시 이미지">
+        <div class="hero-caption">
+          <h2>서울의 궁궐, 모바일로 탐방하기</h2>
+          <p>이미지·영상·오디오를 다루는 jQuery Mobile 실습</p>
+        </div>
+      </div>
+
+      <p class="lead">목록에서 탐방할 콘텐츠를 선택하세요. 모든 시각 자료는 교육용으로 제작된 예시 이미지입니다.</p>
+
+      <ul data-role="listview" class="menu-list">
+        <li><a href="#intro" data-transition="slide">궁궐 소개</a></li>
+        <li><a href="#movie" data-transition="slide">경복궁 영상</a></li>
+        <li><a href="#music1" data-transition="slide">궁궐 테마 음악 ①</a></li>
+        <li><a href="#music2" data-transition="slide">궁궐 테마 음악 ②</a></li>
+      </ul>
+
+      <div class="step-card">
+        <span class="step-badge">STEP 02</span>
+        <p>영상 · 음악 화면 이동과 미디어 일시정지를 직접 구현합니다.</p>
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 궁궐 소개 ========== -->
+  <div data-role="page" id="intro">
+    <div data-role="header" data-theme="a">
+      <a href="#home" data-rel="back" data-direction="reverse" data-icon="carat-l" data-iconpos="notext" class="ui-btn-left">홈으로</a>
+      <h1>궁궐 소개</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h2 class="intro-title">경복궁</h2>
+      <p class="intro-sub">조선의 법궁(法宮)으로 세워진 서울의 대표 궁궐입니다. 항목을 눌러 자세한 내용을 확인하세요.</p>
+
+      <div data-role="collapsible-set" data-inset="true">
+
+        <div data-role="collapsible" data-collapsed="false">
+          <h3>역사</h3>
+          <ul>
+            <li><strong>1395년</strong> 태조 이성계가 한양 천도 후 가장 먼저 지은 궁궐입니다.</li>
+            <li><strong>임진왜란</strong> 때 대부분의 건물이 불에 타 약 270년간 빈터로 남았습니다.</li>
+            <li><strong>1867년</strong> 고종 때 흥선대원군의 주도로 다시 지어졌습니다.</li>
+            <li>일제강점기에 많은 건물이 훼손되었고, 현재 복원 사업이 이어지고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>건축물</h3>
+          <ul>
+            <li><strong>광화문</strong> 경복궁의 정문으로, 궁궐 남쪽에서 가장 먼저 만나는 문입니다.</li>
+            <li><strong>근정전</strong> 왕의 즉위식과 큰 행사가 열리던 정전으로, 국보로 지정되어 있습니다.</li>
+            <li><strong>경회루</strong> 연못 위에 세운 누각으로, 나라의 연회를 열던 곳입니다.</li>
+            <li><strong>향원정</strong> 연못 가운데 섬에 세운 정자로, 후원의 정취를 보여 줍니다.</li>
+          </ul>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>관람 예절</h3>
+          <ul>
+            <li>건물 기둥, 담장, 석조물은 손으로 만지거나 기대지 않습니다.</li>
+            <li>지정된 관람 동선을 따르고, 출입 제한 구역에는 들어가지 않습니다.</li>
+            <li>다른 관람객을 위해 조용히 이야기하고 쓰레기는 되가져갑니다.</li>
+            <li>휴궁일과 관람 시간은 방문 전에 공식 안내에서 확인하세요.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 영상 ========== -->
+  <div data-role="page" id="movie">
+    <div data-role="header" data-theme="a">
+      <a href="#home" data-rel="back" data-direction="reverse" data-icon="carat-l" data-iconpos="notext" class="ui-btn-left">홈으로</a>
+      <h1>경복궁 영상</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h2 class="page-title">경복궁 영상 탐방</h2>
+      <p class="note-box">유튜브와 앱 영상으로 둘러보기</p>
+
+      <p class="section-label">유튜브 영상</p>
+      <!-- YOUR_VIDEO_ID 를 사용할 경복궁 영상의 ID로 바꾸세요 (예: watch?v=ABC123 → ABC123) -->  
+
+      <!-- <div class="video-wrap"> -->
+        <video class="local-video" controls preload="metadata">
+          <source src="../assets\[4K Drone] GyeongBokGung Palace.mp4" type="video/mp4">
+          이 브라우저는 video 태그를 지원하지 않습니다.
+        </video>        
+      <!-- </div> -->
+
+      <p class="section-label">앱 내장 영상</p>
+      <video class="local-video" controls preload="metadata" playsinline poster="../assets/scene-04.jpg">
+        <source src="../assets/palace-tour.mp4" type="video/mp4">
+        이 브라우저는 video 태그를 지원하지 않습니다.
+      </video>
+
+      <p class="caption">재생 버튼을 눌러 시작하세요. 다른 화면으로 이동하면 영상이 자동으로 멈춥니다.</p>
+      <a href="#media-help" data-rel="dialog" data-transition="slide" class="help-link">재생 안내 보기</a>
+
+      <div class="nav-row">
+        <a href="#home" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all">이전 · 홈</a>
+        <a href="#music1" data-transition="slide" class="ui-btn ui-corner-all">다음 · 음악</a>
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 음악 1 ========== -->
+  <div data-role="page" id="music1">
+    <div data-role="header" data-theme="a">
+      <a href="#home" data-rel="back" data-direction="reverse" data-icon="carat-l" data-iconpos="notext" class="ui-btn-left">홈으로</a>
+      <h1>경복궁 음악 1</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h2 class="page-title">궁궐 테마 음악 ①</h2>
+      <p class="note-box">첫 번째 교육용 연주곡</p>
+
+      <audio controls preload="none">
+        <source src="../assets/palace-melody-1.mp3" type="audio/mpeg">
+        이 브라우저는 audio 태그를 지원하지 않습니다.
+      </audio>
+
+      <img class="cover" src="../assets/scene-02.jpg" alt="경회루와 연못을 표현한 예시 이미지">
+      <p class="caption">실습을 위해 생성한 짧은 창작 연주곡입니다. 전통 음악 원곡을 사용하지 않았습니다.</p>
+      <a href="#media-help" data-rel="dialog" data-transition="slide" class="help-link">재생 안내 보기</a>
+
+      <div class="nav-row">
+        <a href="#home" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all">이전 · 홈</a>
+        <a href="#music2" data-transition="slide" class="ui-btn ui-corner-all">다음 음악</a>
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 음악 2 ========== -->
+  <div data-role="page" id="music2">
+    <div data-role="header" data-theme="a">
+      <a href="#home" data-rel="back" data-direction="reverse" data-icon="carat-l" data-iconpos="notext" class="ui-btn-left">홈으로</a>
+      <h1>경복궁 음악 2</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h2 class="page-title">궁궐 테마 음악 ②</h2>
+      <p class="note-box">두 번째 교육용 연주곡</p>
+
+      <audio controls preload="none">
+        <source src="../assets/palace-melody-2.mp3" type="audio/mpeg">
+        이 브라우저는 audio 태그를 지원하지 않습니다.
+      </audio>
+
+      <img class="cover" src="../assets/scene-03.jpg" alt="궁궐 전각을 표현한 예시 이미지">
+      <p class="caption">실습을 위해 생성한 짧은 창작 연주곡입니다. 전통 음악 원곡을 사용하지 않았습니다.</p>
+      <a href="#media-help" data-rel="dialog" data-transition="slide" class="help-link">재생 안내 보기</a>
+
+      <div class="nav-row">
+        <a href="#music1" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all">이전 음악</a>
+        <a href="#home" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all">홈으로</a>
+      </div>
+    </div>
+
+    <div data-role="footer">
+      <p>경복궁 문화유산 탐방 · jQuery Mobile 3단계 실습</p>
+    </div>
+  </div>
+
+  <!-- ========== 재생 안내 (dialog) ========== -->
+  <div data-role="page" id="media-help">
+    <div data-role="header" data-theme="a">
+      <h1>재생 안내</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <ul>
+        <li>모바일 브라우저는 소리가 나는 미디어를 자동으로 재생하지 않습니다. 재생 버튼을 직접 눌러 주세요.</li>
+        <li>다른 화면으로 이동하거나 이 안내를 열면 재생 중인 영상과 음악이 자동으로 멈춥니다.</li>
+        <li>영상과 음악은 한 번에 하나만 재생됩니다.</li>
+      </ul>
+      <a href="#" data-rel="back" class="ui-btn ui-corner-all">닫기</a>
+    </div>
+  </div>
+
+</body>
+</html>
